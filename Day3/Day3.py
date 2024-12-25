@@ -1,5 +1,4 @@
-goal = 368078
-
+puzzle_input = 368078
 def find_ring(goal): #finds the ring around the goal
     incs, nums = [1, 3, 5, 7], [1, 1, 1, 1] # right, up, left, down
     ind, exceeded_goal = 0, False #index of how far ring goes out
@@ -32,6 +31,70 @@ def run(goal):
         if difference <= ind: return ind + difference 
         else: return 2 * ind - (difference - ind)
 
-print(run(goal))
+def expand(spiral):
+    len_nr = len(spiral) + 2
+    empty_row, new_spiral = [], []
+    for _ in range(len_nr): empty_row.append(0)
+    new_spiral.append(empty_row)
+    for i in range(len(spiral)): new_spiral.append([0] + spiral[i] + [0])
+    new_spiral.append(empty_row.copy())
+    return new_spiral
 
-     
+def sum_ind(cur_pos, spiral):
+    return sum(spiral[cur_pos[0] - 1][cur_pos[1]-1:cur_pos[1]+2] + spiral[cur_pos[0] + 1][cur_pos[1]-1:cur_pos[1]+2] + spiral[cur_pos[0]][cur_pos[1]-1:cur_pos[1]+2:2])
+
+def run_pt2(goal):
+    spiral = [[0,0,0],[0,1,0],[0,0,0]]
+    rad = 2
+    inc = 2
+    for x in spiral: print(x)
+    print()
+    for p in range(3):
+        cur_pos = [rad,rad]
+        print('cur_p', cur_pos)
+        #step 0 expand
+        spiral = expand(spiral)
+        #step 1 move right once from current position
+        cur_pos = [cur_pos[0], cur_pos[1] + 1]
+        # print('cur_p', cur_pos)
+
+        spiral[cur_pos[0]][cur_pos[1]] = sum_ind(cur_pos, spiral)
+        if sum_ind(cur_pos, spiral) > goal: return sum_ind(cur_pos, spiral)
+        for x in spiral: print(x)
+        print()
+        #step 2 move up u_inc times
+        for _ in range(1, inc):
+            cur_pos = [cur_pos[0] - 1, cur_pos[1]]
+            spiral[cur_pos[0]][cur_pos[1]] = sum_ind(cur_pos, spiral)
+            if sum_ind(cur_pos, spiral) > goal: return sum_ind(cur_pos, spiral)
+        for x in spiral: print(x)
+        print()
+        #step 3 move left l_inc times
+        for _ in range(1, inc + 1):
+            cur_pos = [cur_pos[0], cur_pos[1] - 1]
+            spiral[cur_pos[0]][cur_pos[1]] = sum_ind(cur_pos, spiral)
+            if sum_ind(cur_pos, spiral) > goal: return sum_ind(cur_pos, spiral)
+        for x in spiral: print(x)
+        print()
+        #step 4 move down d_inc times
+        for _ in range(1, inc + 1):
+            cur_pos = [cur_pos[0] + 1, cur_pos[1]]
+            spiral[cur_pos[0]][cur_pos[1]] = sum_ind(cur_pos, spiral)
+            if sum_ind(cur_pos, spiral) > goal: return sum_ind(cur_pos, spiral)
+        for x in spiral: print(x)
+        print()
+        #step 5 move right r_inc times
+        for _ in range(1, inc + 1):
+            cur_pos = [cur_pos[0], cur_pos[1] + 1]
+            spiral[cur_pos[0]][cur_pos[1]] = sum_ind(cur_pos, spiral)
+            if sum_ind(cur_pos, spiral) > goal: return sum_ind(cur_pos, spiral)
+        inc += 2
+        for x in spiral: print(x)
+        rad += 2
+        print('curpos', cur_pos)
+        print()
+
+
+
+#print(run(puzzle_input))
+print(run_pt2(puzzle_input))
