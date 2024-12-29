@@ -24,7 +24,6 @@ def xor(my_list):
     #then joins whole list to form a string and returns it
     hexadecimal = ''.join(['0'*(len(hex(dense_hash[i])[2:])%2) + hex(dense_hash[i])[2:] for i in range(len(dense_hash))])
     return hexadecimal
-# key = 'amgozmfv'
 key = 'amgozmfv'
 def pt1():
     rounds, suffix, total_used, grid = 64, [17, 31, 73, 47, 23], 0, []
@@ -46,7 +45,6 @@ def groups(ind, indices): #removes an entire group of touching used spaces
     return 1
     
 grid = pt1() #pt 1 and starting pt2
-# indices = [] #every index that is a used space
 indices = [[r,c] for r in range(128) for c in range(128) if grid[r][c] == '1'] #list of indexs that are used (==1) in the grid
 ct = 0 #initializes count at 0
 ind_copy = indices.copy() #makes a copy since not using a copy messed things up a bit, this is just easier since my function checks if indexes are in the list anyway
