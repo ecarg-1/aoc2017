@@ -22,7 +22,7 @@ def xor(my_list):
         dense_hash.append(eval(x)) #evaluates that string using xor and appends it to dense hash
     #takes each number in dense hash and converts to hex in for 0x00 or 0x0 and removes the 0x at the start, if leftover is len 1, adds 0 at the start to make it 2 digits
     #then joins whole list to form a string and returns it
-    hexadecimal = ''.join(['0'*(len(hex(dense_hash[i]).strip('0x'))%2) + hex(dense_hash[i]).strip('0x') for i in range(len(dense_hash))])
+    hexadecimal = ''.join(['0'*(len(hex(dense_hash[i])[2:])%2) + hex(dense_hash[i])[2:] for i in range(len(dense_hash))])
     return hexadecimal
 
 #pt 1
