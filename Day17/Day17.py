@@ -8,11 +8,10 @@ def run(insertions, v): #takes in num of insertions and the number that we want 
     print(buffer[buffer.index(v)+1]) #find the index of where val is, adds 1, and prints what is in that index
 
 def pt2(insertions): #the index of 0 is always 0 regardless of what is inserted
-    curp, len_buf, ans = 0, 1, 0 #does not create whole buffer, just tracks length, current position, and what is next to the 0th index
+    curp, ans = 0, 0 #does not create whole buffer, just tracks length, current position, and what is next to the 0th index
     for val in range(1, insertions + 1): #goes through each insertions
-        curp = (curp+steps)%len_buf #finds the new curp using steps with mod to wrap 
-        if curp == 0: ans = val #if the curp is 0, that value will be the index after 0
-        curp, len_buf = curp + 1, len_buf + 1 #increments buffer length and also curp since the index is the inserted number
+        curp = (curp+steps)%val + 1 #finds the new curp using steps with mod to wrap 
+        if curp == 1: ans = val #if the curp is 0, that value will be the index after 0
     print(ans)
 #length of buffer is also equal to the value in the loop
 run(2017, 2017) #pt1, wouldn't work for pt2 since it's too slow
