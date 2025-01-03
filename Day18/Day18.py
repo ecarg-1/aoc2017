@@ -7,12 +7,11 @@ def pt1():
     last_freq, i = 0, 0
     while i<len(instructions): #iterates through instructions
         ins = instructions[i]
+        a = int(ins[1]) if ins[1].isnumeric() else ins[1]
         if len(ins) == 3: 
-            a = int(ins[1]) if ins[1].isnumeric() else ins[1]
             b = int(ins[2]) if ins[2].strip('-').isnumeric() else ins[2]
             if isinstance(b, str):
                 if b not in reg_dict.keys(): reg_dict[b] = 0
-        else: a = int(ins[1]) if ins[1].isnumeric() else ins[1]
         if isinstance(a, str):
                 if a not in reg_dict.keys(): reg_dict[a] = 0
         match ins[0]:
@@ -22,7 +21,7 @@ def pt1():
             case 'mul': reg_dict[a] = reg_dict[a] * b if isinstance(b, int) else reg_dict[a] * reg_dict[b]
             case 'mod': reg_dict[a] = reg_dict[a] % b if isinstance(b, int) else reg_dict[a] % reg_dict[b]
             case 'rcv': 
-                x = reg_dict[a] if isinstance(a, int) else reg_dict[a]
+                x = a if isinstance(a, int) else reg_dict[a]
                 if x!=0: 
                     print('last played:', last_freq)
                     return 0
@@ -42,12 +41,11 @@ def pt2():
     while True:
         if state[0] == 'deadlock' and state[1] == 'deadlock': break
         ins = instructions[ind[cr]]
+        a = int(ins[1]) if ins[1].isnumeric() else ins[1]
         if len(ins) == 3: 
-            a = int(ins[1]) if ins[1].isnumeric() else ins[1]
             b = int(ins[2]) if ins[2].strip('-').isnumeric() else ins[2]
             if isinstance(b, str):
                 if b not in reg_dict[cr].keys(): reg_dict[cr][b] = 0
-        else: a = int(ins[1]) if ins[1].isnumeric() else ins[1]
         if isinstance(a, str):
                 if a not in reg_dict[cr].keys(): reg_dict[cr][a] = 0
         match ins[0]:
