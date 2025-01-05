@@ -6,8 +6,7 @@ for line in f.readlines():
     pattern_guide[i] = [0 if x == '.' else 1 for x in re.sub('/','',line.strip('\n').split()[-1])]      #dict where the key is the index in the follwihg list and the value is the new pattern
     x = np.array([0 if x == '.' else 1 for x in re.sub('/','',line.split()[0])])                        #flattened array of each input pattern
     shape = int(math.sqrt(len(x)))                                                                      #finds the dimensions of the matrix
-    x = np.reshape(x, [shape, shape])                                                                   #this reshapes it into a 2D array instead of flat
-    cur_orientations = []                                                                               #empty list to start all current orientations
+    x, cur_orientations= np.reshape(x, [shape, shape]), []                                              #this reshapes it into a 2D array instead of flat, empty list to start all current orientations
     for _ in range(2):                                                                                  #loops twice (mirror, unmirrored)
         for _ in range(4):                                                                              #4 times for each 90 degree turn
             cur_orientations.append(list(x.flatten()))                                                  #appends the flattend version
@@ -26,8 +25,7 @@ def make_grid(grid):                                                            
     for block in blocks:                                                                        #goes through each block
         i = 0                                                                                   #stants indexing pattern orientations at 0
         while i < len(pattern_orientations):                                                    #loops through pattern orientations
-            if list(block) in pattern_orientations[i]:                                          #if matching pattern found in index i
-                matches.append(pattern_guide[i])                                                #corresponding output is in dict with key i
+            if list(block) in pattern_orientations[i]: matches.append(pattern_guide[i])         #if matching pattern found in index i, corresponding output is in dict with key i
             i+=1                                                                                #inc i
     shape, match_shape = int(math.sqrt(len(matches))), int(math.sqrt(len(matches[0])))          #shape of the match itself is also flat and needs to be shaped
     reshaped_rows = [np.concatenate([np.reshape(matches[i], (match_shape, match_shape)) for i in range(x, x+shape)], axis=1) for x in range(0, len(matches),shape)] #creates a list of reshaped concatenated rows (added to the left) to later be all concatenated down 
