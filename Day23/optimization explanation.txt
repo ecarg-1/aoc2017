@@ -1,0 +1,32 @@
+set b 84            Start of initial code			
+set c b
+jnz a 2
+jnz 1 5
+mul b 100 
+sub b -100000
+set c b
+sub c -17000        End of initial code (b=108400, c=125400(which is just b+17000), a=1(purpose is to skip line 3))
+(set f 1            Start of loop (jnz 1 -23 on line 32), sets f=1 to because f later needs to be set to 0 (line 25) actually increment h
+set d 2             sets d = 2
+(set e 2            sets e = 2
+(set g d            sets g = d 
+mul g e             sets g = e*g = d*e
+sub g b             sets g = g-b
+jnz g 2             does not jump if g=0 (d*e=b)
+set f 0             sets f to 0 only if the previous line doesn't jump so only if d*e=b
+sub e -1            increments e (e is incremented after d*e=b, the groupings i made here aren't the same as the for loops needed)
+set g e             g = e
+sub g b             g = g-b = e-b
+jnz g -8)           does not jump if g=0 (e=b, aka the end of the e loop) 
+sub d -1            increments d (after the e loop, the d loop continues, so although line 11 starts with e, d is the outer loop)
+set g d             g = d
+sub g b             sets g = g-b = d-b
+jnz g -13)          does not jump if d=b
+jnz f 2             does not jump if f=0 (after the d loop, checks if f==0 and will increment h accordingly) 
+sub h -1            increments h
+set g b             sets g = b
+sub g c             sets g =g-c = b-c
+jnz g 2             does not jump if b=c 
+jnz 1 3             ends it since it jumps past the ending index but only if the previous line doesn't jump (so once b=c, it's over)
+sub b -17           subtracts 17 from b (runs 1000 times since b must equal c to end and c=b+17000)
+jnz 1 -23)          loops
